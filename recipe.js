@@ -1,10 +1,10 @@
 
+var RECIPE_PATH = RECIPES_PATH + '/cakephp2-core';
+var TEMPLATES_PATH = RECIPE_PATH + '/templates';
+
 var fs = require('fs-extra');
 var async = require('async');
-var burner = require(__base + '/burner');
-
-var outputPath = './output';
-var templatesPath = __base + '/recipes/cakephp2-core/templates';
+var burner = require(BASE_PATH + '/burner');
 
 module.exports = {
         
@@ -39,10 +39,10 @@ module.exports = {
 var init = function(json, callback) {
     async.parallel([
         function(callback) {
-            fs.emptyDir(outputPath + '/Model', callback);
+            fs.emptyDir(OUTPUT_PATH + '/Model', callback);
         },
         function(callback) {
-            fs.emptyDir(outputPath + '/scripts', callback);
+            fs.emptyDir(OUTPUT_PATH + '/scripts', callback);
         }
     ], function(error, results) {
         callback(error);
@@ -50,15 +50,15 @@ var init = function(json, callback) {
 };
 
 var burnAppModel = function(config, callback) {
-    var input = templatesPath + '/AppModel.php';
-    var output = outputPath + '/Model/AppModel.php';
+    var input = TEMPLATES_PATH + '/AppModel.php';
+    var output = OUTPUT_PATH + '/Model/AppModel.php';
     var params = {};
     burner.template(input, output, params, callback);
 };
 
 var burnModel = function(config, callback) {
-    var input = templatesPath + '/Model.php';
-    var output = outputPath + '/Model/' + config.name + '.php';
+    var input = TEMPLATES_PATH + '/Model.php';
+    var output = OUTPUT_PATH + '/Model/' + config.name + '.php';
     var params = {
         Model: config.name,
         table: config.table
